@@ -1,0 +1,4 @@
+use hex_literal::hex;
+
+pub const ADDRESS_ZERO: [u8; 20] = hex!("0000000000000000000000000000000000000000");
+pub const ADDRESS_CONVERTER: [u8; 20] = hex!("e831FDB60Dc18c264f1B45cadAFD5f2f2993EE83");

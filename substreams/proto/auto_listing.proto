@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package auto_listing.v1;
+
+message TokenInfo {
+    string name = 1;
+    string symbol = 2;
+    uint64 decimals = 3;
+    bool in_converter = 4;
+} 
+
+message Token {
+    string addressERC20 = 1;
+    string addressERC223 = 2;
+    TokenInfo token_info = 3; 
+}
+
+
+message FeeToken {
+    string address = 1;
+    TokenInfo token_info = 2;
+}
+
+
+message Events {
+    repeated ListingContractUpdated listing_contract_updateds = 1;
+    repeated ListingPrice listing_prices = 2;
+    repeated TokenListed token_listeds = 3;
+}
+
+
+message ListingContractUpdated {
+    string auto_listing = 1;
+    string name = 2;
+    string url = 3;
+    string owner = 4;
+    bytes meta = 5; 
+    uint64 timestamp = 6;
+}
+
+message ListingPrice {
+    uint64 timestamp = 1;
+    string auto_listing = 2;
+    FeeToken fee_token = 3;
+    string price = 4;
+}
+
+message TokenListed {
+    uint64 timestamp = 1;
+    string auto_listing = 2;
+    Token token = 3;
+}

@@ -1,0 +1,28 @@
+specVersion: v0.1.0
+package:
+  name: auto_listing
+  version: v0.1.0
+
+imports:
+  graph: https://github.com/streamingfast/substreams-sink-subgraph/releases/download/v0.1.0/substreams-sink-subgraph-protodefs-v0.1.0.spkg
+  entity: https://github.com/streamingfast/substreams-entity-change/releases/download/v1.1.0/substreams-entity-change-v1.1.0.spkg
+
+protobuf:
+  files:
+    - auto_listing.proto
+  importPaths:
+    - ./proto
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ./target/wasm32-unknown-unknown/release/substreams.wasm
+
+modules:
+  - name: map_events
+    kind: map
+    initialBlock: 6535496
+    inputs:
+      - source: sf.ethereum.type.v2.Block
+    output:
+      type: proto:auto_listing.types.v1.Events

@@ -1,0 +1,19 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: substreams
+    name: AutoListing
+    network: sepolia # Ethereum mainnet
+    source:
+      startBlock: 6535496
+      package:
+        moduleName: map_events # Module name
+        file: ../substreams/auto-listing-v0.1.0.spkg # Package
+    mapping:
+      apiVersion: 0.0.7
+      kind: substreams/graph-entities
+      file: ./src/mapping.ts # Path of the mapping file.
+      handler: handleEvents # Name of the handler function of the trigger

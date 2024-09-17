@@ -1,0 +1,26 @@
+[general]
+
+[store]
+[store.primary]
+connection = "postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/$POSTGRES_DB"
+weight = 1
+pool_size = 10
+
+[chains]
+ingestor = "block_ingestor_node"
+[chains.$NETWORK]
+protocol = "substreams"
+shard = "primary"
+provider = [
+    { label = "substreams", details = { type = "substreams", url = "$SUBSTREAMS_ENDPOINT", token = "$SUBSTREAMS_API_TOKEN", features = [
+        "compression",
+        "filters",
+    ], conn_pool_size = 1 } },
+]
+
+
+
+[deployment]
+[[deployment.rule]]
+shard = "primary"
+indexers = ["default"]

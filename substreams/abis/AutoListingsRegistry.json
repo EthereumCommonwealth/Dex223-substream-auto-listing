@@ -1,0 +1,64 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "_autolisting", "type": "address" },
+      { "indexed": false, "internalType": "address", "name": "_owner", "type": "address" },
+      { "indexed": false, "internalType": "string", "name": "_url", "type": "string" },
+      { "indexed": false, "internalType": "bytes", "name": "_metadata", "type": "bytes" }
+    ],
+    "name": "ListingContractUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "_autolisting", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "_token", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "_price", "type": "uint256" }
+    ],
+    "name": "ListingPrice",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "_listedBy", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "_tokenERC20", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "_tokenERC223", "type": "address" }
+    ],
+    "name": "TokenListed",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_tokenERC20", "type": "address" },
+      { "internalType": "address", "name": "_tokenERC223", "type": "address" }
+    ],
+    "name": "recordListing",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_owner", "type": "address" },
+      { "internalType": "string", "name": "_url", "type": "string" },
+      { "internalType": "bytes", "name": "_metadata", "type": "bytes" }
+    ],
+    "name": "updateContractInfo",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_token", "type": "address" },
+      { "internalType": "uint256", "name": "_price", "type": "uint256" }
+    ],
+    "name": "updateListingPrice",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

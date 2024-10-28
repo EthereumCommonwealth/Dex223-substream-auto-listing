@@ -6,9 +6,9 @@ schema:
 dataSources:
   - kind: substreams
     name: AutoListing
-    network: sepolia # Ethereum mainnet
+    network: eosevm # Ethereum mainnet
     source:
-      startBlock: 6535496
+      # startBlock: 6535496
       package:
         moduleName: map_events # Module name
         file: ../substreams/auto-listing-v0.1.0.spkg # Package

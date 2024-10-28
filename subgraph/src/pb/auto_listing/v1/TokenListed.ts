@@ -4,6 +4,7 @@
 
 import { Writer, Reader } from "as-proto/assembly";
 import { Token } from "./Token";
+import { Transaction } from "./Transaction";
 
 export class TokenListed {
   static encode(message: TokenListed, writer: Writer): void {
@@ -18,6 +19,14 @@ export class TokenListed {
       writer.uint32(26);
       writer.fork();
       Token.encode(token, writer);
+      writer.ldelim();
+    }
+
+    const tx = message.tx;
+    if (tx !== null) {
+      writer.uint32(34);
+      writer.fork();
+      Transaction.encode(tx, writer);
       writer.ldelim();
     }
   }
@@ -41,6 +50,10 @@ export class TokenListed {
           message.token = Token.decode(reader, reader.uint32());
           break;
 
+        case 4:
+          message.tx = Transaction.decode(reader, reader.uint32());
+          break;
+
         default:
           reader.skipType(tag & 7);
           break;
@@ -53,14 +66,17 @@ export class TokenListed {
   timestamp: u64;
   autoListing: string;
   token: Token | null;
+  tx: Transaction | null;
 
   constructor(
     timestamp: u64 = 0,
     autoListing: string = "",
-    token: Token | null = null
+    token: Token | null = null,
+    tx: Transaction | null = null
   ) {
     this.timestamp = timestamp;
     this.autoListing = autoListing;
     this.token = token;
+    this.tx = tx;
   }
 }

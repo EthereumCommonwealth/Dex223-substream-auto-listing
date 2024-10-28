@@ -4,7 +4,6 @@ package:
   version: v0.1.0
 
 imports:
-  graph: https://github.com/streamingfast/substreams-sink-subgraph/releases/download/v0.1.0/substreams-sink-subgraph-protodefs-v0.1.0.spkg
   entity: https://github.com/streamingfast/substreams-entity-change/releases/download/v1.1.0/substreams-entity-change-v1.1.0.spkg
 
 protobuf:
@@ -21,8 +20,10 @@ binaries:
 modules:
   - name: map_events
     kind: map
-    initialBlock: 6535496
+    initialBlock: 48404036
     inputs:
       - source: sf.ethereum.type.v2.Block
     output:
       type: proto:auto_listing.types.v1.Events
+
+network: eosevm

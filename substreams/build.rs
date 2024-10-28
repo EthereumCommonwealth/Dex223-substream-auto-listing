@@ -8,7 +8,7 @@ fn main() -> Result<(), anyhow::Error> {
     Abigen::new("auto_listings_registry", "abis/AutoListingsRegistry.json")?
         .generate()?
         .write_to_file("src/abi/auto_listings_registry.rs")?;
-    Abigen::new("pool", "abis/ERC20andERC223.json")?
+    Abigen::new("erc20_erc223", "abis/ERC20andERC223.json")?
         .generate()?
         .write_to_file("src/abi/erc20_erc223.rs")?;
 

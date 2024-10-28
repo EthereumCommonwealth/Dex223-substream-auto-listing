@@ -1,7 +1,6 @@
 mod abi;
 mod pb;
-
 mod maps;
-mod rpc;
 mod token;
 mod utils;
+mod static_token_definition;

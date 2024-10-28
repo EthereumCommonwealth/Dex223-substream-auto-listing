@@ -4,6 +4,7 @@
 
 import { Writer, Reader } from "as-proto/assembly";
 import { FeeToken } from "./FeeToken";
+import { Transaction } from "./Transaction";
 
 export class ListingPrice {
   static encode(message: ListingPrice, writer: Writer): void {
@@ -23,6 +24,14 @@ export class ListingPrice {
 
     writer.uint32(34);
     writer.string(message.price);
+
+    const tx = message.tx;
+    if (tx !== null) {
+      writer.uint32(50);
+      writer.fork();
+      Transaction.encode(tx, writer);
+      writer.ldelim();
+    }
   }
 
   static decode(reader: Reader, length: i32): ListingPrice {
@@ -48,6 +57,10 @@ export class ListingPrice {
           message.price = reader.string();
           break;
 
+        case 6:
+          message.tx = Transaction.decode(reader, reader.uint32());
+          break;
+
         default:
           reader.skipType(tag & 7);
           break;
@@ -61,16 +74,19 @@ export class ListingPrice {
   autoListing: string;
   feeToken: FeeToken | null;
   price: string;
+  tx: Transaction | null;
 
   constructor(
     timestamp: u64 = 0,
     autoListing: string = "",
     feeToken: FeeToken | null = null,
-    price: string = ""
+    price: string = "",
+    tx: Transaction | null = null
   ) {
     this.timestamp = timestamp;
     this.autoListing = autoListing;
     this.feeToken = feeToken;
     this.price = price;
+    this.tx = tx;
   }
 }

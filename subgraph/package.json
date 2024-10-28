@@ -5,13 +5,16 @@
     "codegen": "buf generate --exclude-path=\"sf/substreams\" --type=\"auto_listing.v1.Events\" ../substreams/auto-listing-v0.1.0.spkg#format=bin && graph codegen",
     "graph": "graph",
     "build": "graph build",
-    "create-local": "graph create --node http://localhost:8020/ subgraphtest",
-    "remove-local": "graph remove --node http://localhost:8020/ subgraphtest",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 subgraphtest --version-label=v0.0.1",
-    "pause-local": "docker exec graph-node graphman unassign subgraphtest",
-    "resume-local": "docker exec graph-node graphman reassign subgraphtest default",
+    "create-local": "export $(xargs < .env) && graph create --node http://localhost:8020/ dex223-auto-listing-$NETWORK",
+    "remove-local": "export $(xargs < .env) && graph remove --node http://localhost:8020/ dex223-auto-listing-$NETWORK",
+    "deploy-local": "export $(xargs < .env) && graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 dex223-auto-listing-$NETWORK --version-label=v0.0.1",
+    "pause-local": "docker exec graph-node graphman unassign dex223-auto-listing-$NETWORK",
+    "resume-local": "docker exec graph-node graphman reassign dex223-auto-listing-$NETWORK default",
     "clean-local-data": "rm -rf ./dev-environment/data",
-    "launch-graph-node": "./dev-environment/start.sh"
+    "launch-graph-node": "./dev-environment/start.sh",
+    "create-server": "export $(xargs < .env) && graph create --node http://194.238.30.31:8020/ dex223-auto-listing-$NETWORK",
+    "remove-server": "export $(xargs < .env) && graph remove --node http://194.238.30.31:8020/ dex223-auto-listing-$NETWORK",
+    "deploy-server": "export $(xargs < .env) && graph deploy --node http://194.238.30.31:8020/ --ipfs http://194.238.30.31:5001 dex223-auto-listing-$NETWORK --version-label=v0.0.1"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "^0.69.0",

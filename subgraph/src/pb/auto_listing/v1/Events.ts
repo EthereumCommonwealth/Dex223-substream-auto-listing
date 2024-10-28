@@ -6,6 +6,8 @@ import { Writer, Reader } from "as-proto/assembly";
 import { ListingContractUpdated } from "./ListingContractUpdated";
 import { ListingPrice } from "./ListingPrice";
 import { TokenListed } from "./TokenListed";
+import { ERC20WrapperCreatedEvent } from "./ERC20WrapperCreatedEvent";
+import { ERC223WrapperCreatedEvent } from "./ERC223WrapperCreatedEvent";
 
 export class Events {
   static encode(message: Events, writer: Writer): void {
@@ -30,6 +32,22 @@ export class Events {
       writer.uint32(26);
       writer.fork();
       TokenListed.encode(tokenListeds[i], writer);
+      writer.ldelim();
+    }
+
+    const erc223ToErc20 = message.erc223ToErc20;
+    for (let i: i32 = 0; i < erc223ToErc20.length; ++i) {
+      writer.uint32(34);
+      writer.fork();
+      ERC20WrapperCreatedEvent.encode(erc223ToErc20[i], writer);
+      writer.ldelim();
+    }
+
+    const erc20ToErc223 = message.erc20ToErc223;
+    for (let i: i32 = 0; i < erc20ToErc223.length; ++i) {
+      writer.uint32(42);
+      writer.fork();
+      ERC223WrapperCreatedEvent.encode(erc20ToErc223[i], writer);
       writer.ldelim();
     }
   }
@@ -59,6 +77,18 @@ export class Events {
           );
           break;
 
+        case 4:
+          message.erc223ToErc20.push(
+            ERC20WrapperCreatedEvent.decode(reader, reader.uint32())
+          );
+          break;
+
+        case 5:
+          message.erc20ToErc223.push(
+            ERC223WrapperCreatedEvent.decode(reader, reader.uint32())
+          );
+          break;
+
         default:
           reader.skipType(tag & 7);
           break;
@@ -71,14 +101,20 @@ export class Events {
   listingContractUpdateds: Array<ListingContractUpdated>;
   listingPrices: Array<ListingPrice>;
   tokenListeds: Array<TokenListed>;
+  erc223ToErc20: Array<ERC20WrapperCreatedEvent>;
+  erc20ToErc223: Array<ERC223WrapperCreatedEvent>;
 
   constructor(
     listingContractUpdateds: Array<ListingContractUpdated> = [],
     listingPrices: Array<ListingPrice> = [],
-    tokenListeds: Array<TokenListed> = []
+    tokenListeds: Array<TokenListed> = [],
+    erc223ToErc20: Array<ERC20WrapperCreatedEvent> = [],
+    erc20ToErc223: Array<ERC223WrapperCreatedEvent> = []
   ) {
     this.listingContractUpdateds = listingContractUpdateds;
     this.listingPrices = listingPrices;
     this.tokenListeds = tokenListeds;
+    this.erc223ToErc20 = erc223ToErc20;
+    this.erc20ToErc223 = erc20ToErc223;
   }
 }

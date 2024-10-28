@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+export $(xargs < .env)
 export NETWORK=${NETWORK}
 export SUBSTREAMS_ENDPOINT=${SUBSTREAMS_ENDPOINT}
 export SUBSTREAMS_API_TOKEN=${SUBSTREAMS_API_TOKEN}

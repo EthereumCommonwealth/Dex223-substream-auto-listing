@@ -1,0 +1,1 @@
+substreams run dex223-v0.1.0.spkg map_events -e eosevm.substreams.pinax.network:443 --start-block 6832602 --stop-block +3

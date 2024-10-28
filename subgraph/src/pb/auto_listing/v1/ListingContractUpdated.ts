@@ -3,6 +3,7 @@
 //   protoc-gen-as v1.3.0
 
 import { Writer, Reader } from "as-proto/assembly";
+import { Transaction } from "./Transaction";
 
 export class ListingContractUpdated {
   static encode(message: ListingContractUpdated, writer: Writer): void {
@@ -23,6 +24,14 @@ export class ListingContractUpdated {
 
     writer.uint32(48);
     writer.uint64(message.timestamp);
+
+    const tx = message.tx;
+    if (tx !== null) {
+      writer.uint32(58);
+      writer.fork();
+      Transaction.encode(tx, writer);
+      writer.ldelim();
+    }
   }
 
   static decode(reader: Reader, length: i32): ListingContractUpdated {
@@ -56,6 +65,10 @@ export class ListingContractUpdated {
           message.timestamp = reader.uint64();
           break;
 
+        case 7:
+          message.tx = Transaction.decode(reader, reader.uint32());
+          break;
+
         default:
           reader.skipType(tag & 7);
           break;
@@ -71,6 +84,7 @@ export class ListingContractUpdated {
   owner: string;
   meta: Uint8Array;
   timestamp: u64;
+  tx: Transaction | null;
 
   constructor(
     autoListing: string = "",
@@ -78,7 +92,8 @@ export class ListingContractUpdated {
     url: string = "",
     owner: string = "",
     meta: Uint8Array = new Uint8Array(0),
-    timestamp: u64 = 0
+    timestamp: u64 = 0,
+    tx: Transaction | null = null
   ) {
     this.autoListing = autoListing;
     this.name = name;
@@ -86,5 +101,6 @@ export class ListingContractUpdated {
     this.owner = owner;
     this.meta = meta;
     this.timestamp = timestamp;
+    this.tx = tx;
   }
 }

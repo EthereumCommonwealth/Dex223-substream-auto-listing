@@ -1,95 +1,43 @@
-# dex223 auto listing EOS
+# Substream dex223-auto-listing
 
-- This is a generated Substreams-powered-Subgraph
+## Install tools
 
-# Dependencies
+1. Install substream https://docs.substreams.dev/documentation/consume/installing-the-cli
+2. Create account in https://app.pinax.network/ and you have permision geting SUBSTREAMS_API_TOKEN="<SUBSTREAMS_API_TOKEN>"
+3. Install docker for up graph-node (only local)
+4. Run all instruction from `./subgraph/README.md` and `./substreams/README.md`
 
-## Get Substreams CLI (optional)
+### Graph-node local
 
-To try the Substreams directly, you need to install the `substreams CLI` (v1.7.2 or above).
+1. Open new terminal in `./graph-node` and create `.env` file, check `.env.example`
+2. Run command
 
-You have many options as explained in this [installation guide](https://substreams.streamingfast.io/documentation/consume/installing-the-cli).
+   ```bash
+   export $(xargs < .env)
+   bash ./substreams-config-gen.sh
+   docker-compose -f docker-compose.yml up -d
+   ```
 
-Check if `substreams` was installed successfully, you can run the following command:
+3. Open `./subgraph` in other terminal
 
-```bash
-substreams --version
-> substreams version ...
-```
+   ```bash
+   yarn create-local
+   yarn deploy-local
+   ```
 
-## Get Substreams API Token
+### Publish to TheGraph
 
-To try the Substreams directly or to run a local graph-node instance, you will need to get a Substreams API token.
-Follow the instructions on the [authentification section](https://substreams.streamingfast.io/documentation/consume/authentication) in the `StreamingFast` documentation.
+0. `./subgrpah`
+1. Run command
 
-## Install Docker
+   ```bash
+   graph publish
+   ```
 
-To run a local `graph-node` instance, you will need to install Docker. You can do it by following the instructions on the [official Docker website](https://docs.docker.com/get-docker/).
+   You see link `https://cli.thegraph.com/....` open this link input value in form and click `Deploy`
 
-## Install buf cli
+2. If you want update
 
-To run the proto assembly script bindings, you will need to install the `buf` [cli](https://buf.build/docs/installation).
-
-## Install npm and nodeJS packages
-
-Run the following command in the `root` of the repository:
-
-```bash
-npm install
-```
-
-# Deploy a subgraph
-
-## On a local dev environment
-
-### Launch docker-compose environment
-
-To deploy your subgraph locally, you need to run a local graph-node instance. To do so, export your `SUBSTREAMS_API_TOKEN` and
-use the `launch-graph-node` script :
-
-```bash
-cd subgraph/graph-node && touch .env
-```
-
-add values to .env file
-
-```bash
-NETWORK=<network name>
-SUBSTREAMS_ENDPOINT=https://sepolia.substreams.pinax.network:443
-SUBSTREAMS_API_TOKEN=<api token>
-
-ETH_MAINNET_RPC=<not required>
-POSTGRES_DB=<db name for subgraph>
-POSTGRES_USER=<db user for subgraph>
-POSTGRES_PASSWORD=<db password for subgraph>
-```
-
-```bash
-export $(xargs < .env)
-cmod -x ./substreams-config-gen.sh && ./substreams-config-gen.sh
-./start.sh
-```
-
-This script is running `docker compose` to create all necessary instances to launch properly the node locally, connecting to Streamingfast Substreams API.
-
-### Deploy locally
-
-Then, from another terminal in dir substream:
-
-```bash
-npm run create-local
-npm run deploy-local
-npm run remove-local
-```
-
-### Query a subgraph
-
-Once you subgraph is deployed, you can query it! To do so, you can directly write your query locally on http://localhost:8000/subgraphs/name/{name_of_your_subgraph}/
-
-### Test command
-
-Run command in `substreams`
-
-```bash
-substreams run auto-listing-v0.1.0.spkg map_events -e sepolia.substreams.pinax.network:443 --start-block 6543110 --stop-block +3
-```
+   ```bash
+   graph publish --subgraph-id <SUBGRAPH ID>
+   ```
